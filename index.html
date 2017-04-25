@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chatroom</title>
+	<link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
+	<style>
+		body {
+			background: #413F54;
+		}
+		h1 {
+			color: #F08080;
+			font-family: 'Oswald', sans-serif;
+		}
+		button {
+			background: #F08080;
+			color: white;
+			font-family: 'Oswald', sans-serif;
+			padding: .2em 1em;
+			outline: none;
+			border: none;
+			border-radius: 2px;
+			box-shadow: 2px 2px 8px -1px rgba(0,0,0,0.69);
+
+
+		}
+
+		#message {
+			color: #30292F;
+			font-family: 'Roboto', sans-serif;
+
+
+		}
+
+		#chat {
+			color: #F08080;
+			font-family: 'Roboto', sans-serif;
+		}
+
+		
+
+
+	</style>
+</head>
+<body>
+
+<h1>Chatroom</h1>
+<div class="box">
+<input type="text" id="message">
+<button class="button">Send</button>
+<ul id ="chat"></ul>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+	<script> var socket, button, message, chat, chatItem
+	socket = io()
+	button = document.querySelector('.button')
+	message = document.querySelector('#message')
+	chat = document.querySelector('#chat')
+
+	button.addEventListener('click', function(){
+		socket.emit('chat message', message.value)
+	})
+
+	socket.on('chat message', function (msg) {
+		chatItem = document.createElement('li')
+		chatItem.innerHTML = msg
+		chat.appendChild(chatItem)
+	})
+	</script>
+</body>
+</html>
